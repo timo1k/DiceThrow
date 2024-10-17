@@ -12,12 +12,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
+        val fragment1 = DieFragment.newInstance(6)
 
-            //returns ref of type fragment but we need to access the dieFrag
-            //type cast
-            (supportFragmentManager.findFragmentById(R.id.dieContainer) as DieFragment).throwDie()
-        }
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.dieContainer, fragment1)
+            .commit()
+
+//        findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
+//
+//            //returns ref of type fragment but we need to access the dieFrag
+//            //type cast
+//            (supportFragmentManager.findFragmentById(R.id.dieContainer) as DieFragment).throwDie()
+//        }
 
     }
 }

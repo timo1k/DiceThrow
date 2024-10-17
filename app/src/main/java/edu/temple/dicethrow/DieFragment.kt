@@ -12,10 +12,7 @@ const val DIE_KEY = "dieSidesNumber"
 
 class DieFragment : Fragment() {
 
-    val DIESIDE = "sidenumber"
-
-    private var sides: Int = 0
-
+    private var sides = 1
     lateinit var dieTextView: TextView
 
 
@@ -23,7 +20,7 @@ class DieFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let { it ->
             // If we find the specific argument
-            it.getInt(DIESIDE)?.let {
+            it.getInt(DIE_KEY)?.let {
                 sides = it
             }
         }
