@@ -12,19 +12,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val fragment1 = DieFragment.newInstance(6)
+        val fragment1 = DieFragment.newInstance(20)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.dieContainer, fragment1)
-            .commit()
+        //ffree fragment manager but now we use this we have to impleement saving state itself
 
-//        findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
-//
-//            //returns ref of type fragment but we need to access the dieFrag
-//            //type cast
-//            (supportFragmentManager.findFragmentById(R.id.dieContainer) as DieFragment).throwDie()
-//        }
+        if (supportFragmentManager.findFragmentById(R.id.dieContainer) !is DieFragment)
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.dieContainer, fragment1)
+                .commit()
+
+        findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
+
+            //returns ref of type fragment but we need to access the dieFrag
+            //type cast
+            (supportFragmentManager.findFragmentById(R.id.dieContainer) as DieFragment).throwDie()
+        }
 
     }
 }
