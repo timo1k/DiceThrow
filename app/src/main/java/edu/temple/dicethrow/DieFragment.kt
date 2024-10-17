@@ -8,19 +8,23 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlin.random.Random
 
+const val DIE_KEY = "dieSidesNumber"
+
 class DieFragment : Fragment() {
 
     val DIESIDE = "sidenumber"
 
+    private var sides: Int = 0
+
     lateinit var dieTextView: TextView
 
-    var dieSides: Int = 6
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            it.getInt(DIESIDE).run {
-                dieSides = this
+        arguments?.let { it ->
+            // If we find the specific argument
+            it.getInt(DIESIDE)?.let {
+                sides = it
             }
         }
     }
@@ -44,6 +48,15 @@ class DieFragment : Fragment() {
     }
 
     fun throwDie() {
-        dieTextView.text = (Random.nextInt(dieSides) + 1).toString()
+        dieTextView.text = (Random.nextInt(sides) + 1).toString()
+    }
+
+    companion object {
+        fun newInstance(dieSides: Int) =
+            DieFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(DIE_KEY, dieSides)
+                }
+            }
     }
 }

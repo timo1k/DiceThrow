@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.rollDiceButton).setOnClickListener {
 
             //returns ref of type fragment but we need to access the dieFrag
+            //type cast
             (supportFragmentManager.findFragmentById(R.id.dieContainer) as DieFragment).throwDie()
         }
 
