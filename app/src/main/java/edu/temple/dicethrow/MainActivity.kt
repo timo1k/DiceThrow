@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ButtonFragment.ButtonInterface {
 
-    fun buttonClick(){
+    override fun buttonClick(){
         (supportFragmentManager.findFragmentById(R.id.dieContainer) as DieFragment).throwDie()
     }
 

@@ -22,7 +22,7 @@ class ButtonFragment : Fragment() {
             button.setOnClickListener{
                 //increased coupling
                 //define a interface with parents functionality - contract
-                (requireActivity() as MainActivity).buttonClick()
+                //(requireActivity() as MainActivity).buttonClick()
 
                 (requireActivity() as ButtonInterface).buttonClick()
             }
@@ -30,8 +30,9 @@ class ButtonFragment : Fragment() {
         }
     }
 
+    interface ButtonInterface {
+        fun buttonClick(){}
+    }
+
 }
 
-interface ButtonInterface {
-    fun buttonClick(){}
-}
