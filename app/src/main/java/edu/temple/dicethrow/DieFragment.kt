@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import kotlin.random.Random
 
 const val DIE_KEY = "dieSidesNumber"
@@ -15,7 +16,8 @@ class DieFragment : Fragment() {
     private var valKey = "key"
     private var sides = 1
     lateinit var dieTextView: TextView
-    private var rollVal = 0
+
+    lateinit var dieViewModel: DieViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +28,9 @@ class DieFragment : Fragment() {
                 sides = it
             }
         }
+        //can only put it in places where it will be attached to frag
+        //whose owner , and which class we want a instance of
+        dieViewModel = ViewModelProvider(requireActivity())[DieViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -41,29 +46,24 @@ class DieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        savedInstanceState?.run{
-            rollVal = getInt(valKey, 0)
+        dieViewModel.getDieRoll().observe(viewLifecycleOwner) {
+            //observer - kotlin lingo
+            dieTextView.text = it.toString()
         }
-        if (rollVal == 0) throwDie() else throwDie(rollVal)
+
+        if (dieViewModel.getDieRoll().value == null){
+            throwDie()
+        }
 
 //        view.setOnClickListener{
 //            throwDie()
 //        }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(valKey, rollVal)
-    }
-
     fun throwDie() {
-        rollVal = (Random.nextInt(sides) + 1)
-        throwDie(rollVal)
+        dieViewModel.setDieRoll(Random.nextInt(sides) + 1)
     }
 
-    fun throwDie(currentVal: Int){
-        dieTextView.text = currentVal.toString()
-    }
 
     companion object {
         fun newInstance(dieSides: Int) =
